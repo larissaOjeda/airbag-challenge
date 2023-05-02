@@ -17,7 +17,16 @@ main = Blueprint('charging_detail_blueprint', __name__)
 
 
 
-@main.route('/clear-duplicates/<id>', methods=['GET'])
+@main.route('/print-combinations/', methods=['GET'])
+def get_print_combinations():
+    try:
+        combinations = Exercises.print_combinations()
+        return combinations, 200
+    except Exception as ex: 
+        return jsonify({'message' : str(ex)}), 500
+
+
+@main.route('/clear-duplicates/<numList>', methods=['GET'])
 def get_clear_duplicates():
     try:
         numList = request.json['numList']
