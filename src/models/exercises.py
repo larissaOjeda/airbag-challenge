@@ -16,7 +16,13 @@ from flask import Response
 class Exercises: 
 
     @classmethod
-    def print_combinations():
+    def printCombinations() -> list:
+        """
+        Generates all possible combinations of three distinct digits in ascending order
+
+        Returns
+            list of strings with all the possible combinations of the three different digits asc 
+        """
         res = []
         for n in range(0, 10):
             for m in range(n+1, 10):
@@ -42,11 +48,84 @@ class Exercises:
         if numList is None: 
             return None 
         if len(numList) == 0: 
-            return f"Provided list is empty"
+            return numList
         try:
             return list((set(numList)))
         except Exception as ex: 
             raise Exception(ex)
+        
+
+    @classmethod
+    def evalExpression(expression: str) -> Optional[float]:
+        """
+        Calculates the value of a given arithmetic expression
+
+        Args
+            expression: The arithmetic expression to be evaluated.
+
+        Returns
+            float: The calculated value of the expression.
+        """
+
+        expression = expression.replace(" ", "") # removing spaces
+        stack = []
+        i = 0
+
+        while i < len(expression):
+            character = expression[i]
+
+            if character.isdigit():
+                j = i + 1
+                while j < len(expression) and expression[j].isdigit():
+                    j += 1
+                number = float(expression[i:j])
+                stack.append(number)
+                i = j
+
+            elif character in "+-*/":
+                stack.append(character)
+                i += 1
+
+            elif character == "(":
+                count = 1
+                j = i + 1
+                while j < len(expression) and count > 0:
+                    if expression[j] == "(":
+                        count += 1
+                    elif expression[j] == ")":
+                        count -= 1
+                    j += 1
+                number = Exercises.evalExpression(expression[i+1:j-1])
+                stack.append(number)
+                i = j
+
+            elif character == ")":  # If its a right parenthesis return the result of the expression
+                break
+
+        # Operators priority: multiplication and division first
+        i = 1
+        while i < len(stack) - 1:
+            if stack[i] == "*":
+                stack[i-1:i+2] = [stack[i-1] * stack[i+1]]
+            elif stack[i] == "/":
+                if stack[i+1] == 0:
+                    raise ZeroDivisionError("Division by zero")
+                stack[i-1:i+2] = [stack[i-1] / stack[i+1]]
+            else:
+                i += 2
+
+        # Operators priority: addition and subtraction  second
+        result = stack[0]
+        for i in range(1, len(stack), 2):
+            if stack[i] == "+":
+                result += stack[i+1]
+            elif stack[i] == "-":
+                result -= stack[i+1]
+
+        return result
+
+        
+
         
 
 
