@@ -16,6 +16,15 @@ from flask import Response
 class Exercises: 
 
     @classmethod
+    def print_combinations():
+        res = []
+        for n in range(0, 10):
+            for m in range(n+1, 10):
+                for k in range(m+1, 10):
+                    res.append(f"{n}{m}{k}")
+        return res 
+
+    @classmethod
     def clearDuplicates(numList: list[]) -> Optional[list[float]]:
         """
         Removes duplicate items from a list of numbers and returns the resulting list.
