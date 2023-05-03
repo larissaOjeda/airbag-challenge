@@ -10,5 +10,5 @@ Inside Models folder you can find two folders:
 To run the project: `python3 /src/app.py`
 
 A db was created and connected with docker (and I included the .env file to run it)
-
+Also included a collection of postman requests :) 
 
