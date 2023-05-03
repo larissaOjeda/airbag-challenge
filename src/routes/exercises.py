@@ -1,9 +1,6 @@
 from flask import Blueprint, jsonify, request
 import uuid
 
-# Entities 
-#from models.entities.ChargingDetails import ChargingDetails 
-
 # Models
 from models.exercises import Exercises
 
@@ -19,6 +16,16 @@ def get_print_combinations():
     try:
         combinations = Exercises.printCombinations()
         return combinations, 200
+    except Exception as ex: 
+        return jsonify({'message' : str(ex)}), 500
+
+
+@main.route('/caesar-cipher/<message>', methods=['GET'])
+def get_caesar_cipher():
+    try:
+        message = request.json['message']
+        caesarCipher = Exercises.caesar_cipher(message, )
+        return caesarCipher, 200
     except Exception as ex: 
         return jsonify({'message' : str(ex)}), 500
 
