@@ -6,21 +6,18 @@ import uuid
 
 # Models
 from models.exercises import Exercises
-from models.StatisticsModel import StatisticsModel
 
 # Utils 
 from utils.ListValidation import ListValidation
 
 
-main = Blueprint('charging_detail_blueprint', __name__)
-
-
+main = Blueprint('exercises_blueprint', __name__)
 
 
 @main.route('/print-combinations/', methods=['GET'])
 def get_print_combinations():
     try:
-        combinations = Exercises.print_combinations()
+        combinations = Exercises.printCombinations()
         return combinations, 200
     except Exception as ex: 
         return jsonify({'message' : str(ex)}), 500
@@ -34,5 +31,15 @@ def get_clear_duplicates():
             return jsonify({'message' : "Invalid list"}), 401
         cleanList = Exercises.clearDuplicates(numList)
         return cleanList, 200
+    except Exception as ex: 
+        return jsonify({'message' : str(ex)}), 500
+    
+
+@main.route('/eval-expression/<expression>', methods=['GET'])
+def get_eval_expression():
+    try:
+        expression = request.json['expression']
+        evaluated = Exercises.evalExpression(expression)
+        return evaluated, 200
     except Exception as ex: 
         return jsonify({'message' : str(ex)}), 500
