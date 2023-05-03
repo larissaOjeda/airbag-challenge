@@ -1,0 +1,16 @@
+version: '3.5'
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: larissa
+      POSTGRES_PASSWORD: pass123
+    volumes:
+      - 'larissa-postgres-data:/var/lib/postgresql/data'
+
+volumes:
+  larissa-postgres-data:
+    name: airbag-db
