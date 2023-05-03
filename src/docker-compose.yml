@@ -6,8 +6,8 @@ services:
     ports:
       - '5432:5432'
     environment:
-      POSTGRES_USER: larissa
-      POSTGRES_PASSWORD: pass123
+      POSTGRES_USER: USERRRR
+      POSTGRES_PASSWORD: PASSWORDDDDDD
     volumes:
       - 'larissa-postgres-data:/var/lib/postgresql/data'
 
