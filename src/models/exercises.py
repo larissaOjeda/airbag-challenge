@@ -42,7 +42,31 @@ class Exercises:
             return list((set(numList)))
         except Exception as ex: 
             raise Exception(ex)
-        
+    
+    @classmethod
+    def caesar_cipher(message: str, shift: int) -> str:
+        """
+        Encrypts a given message using a Caesar cipher
+        It is assumed that the message does not contain numbers or special characters (e.g. ".,;:-%$#" or more)
+
+        Args:
+            message: string to be encrypted
+            shift: integer indicating the number of positions to shift each letter by
+
+        Returns:
+            encrypted message: string containing the encrypted message
+        """
+        encrypted_message = ""
+        for char in message:
+            if char.isalpha():
+                shifted_char = chr((ord(char.lower()) - 97 + shift) % 26 + 97)
+                if char.isupper():
+                    shifted_char = shifted_char.upper()
+                encrypted_message += shifted_char
+            else:
+                encrypted_message += char
+        return encrypted_message
+
 
     @classmethod
     def evalExpression(expression: str) -> Optional[float]:
