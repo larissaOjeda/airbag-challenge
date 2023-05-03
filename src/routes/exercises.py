@@ -1,5 +1,4 @@
 from flask import Blueprint, jsonify, request
-import uuid
 
 # Models
 from models.exercises import Exercises
@@ -11,7 +10,7 @@ from utils.ListValidation import ListValidation
 main = Blueprint('exercises_blueprint', __name__)
 
 
-@main.route('/print-combinations/', methods=['GET'])
+@main.route('/print-combinations', methods=['GET'])
 def get_print_combinations():
     try:
         combinations = Exercises.printCombinations()
@@ -20,11 +19,12 @@ def get_print_combinations():
         return jsonify({'message' : str(ex)}), 500
 
 
-@main.route('/caesar-cipher/<message>', methods=['GET'])
+@main.route('/caesar-cipher/<message>/<n>', methods=['GET'])
 def get_caesar_cipher():
     try:
         message = request.json['message']
-        caesarCipher = Exercises.caesar_cipher(message, )
+        n = request.json['n']
+        caesarCipher = Exercises.caesar_cipher(message, n)
         return caesarCipher, 200
     except Exception as ex: 
         return jsonify({'message' : str(ex)}), 500
