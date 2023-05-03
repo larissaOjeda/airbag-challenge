@@ -1,17 +1,6 @@
 from database.db import get_connection
-from .entities.ChargingDetails import ChargingDetails
-from typing import DefaultDict, List, Optional, Tuple
-from pydantic import , ValidationError
-
-
-
-from datetime import datetime
-import pandas as pd
-from pandas import DataFrame
-import io
-import random
-from flask import Response
-
+#from .entities.ChargingDetails import ChargingDetails
+from typing import Optional
 
 class Exercises: 
 

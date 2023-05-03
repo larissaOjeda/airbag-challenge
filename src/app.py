@@ -3,7 +3,7 @@ from flask import Flask
 from config import config
 
 #Routes
-from routes import Exercises
+from routes import exercises
 
 app = Flask(__name__)
 
@@ -15,7 +15,7 @@ if __name__ == '__main__':
     app.config.from_object(config['development']) # from the dictionary
     
     #Blueprints
-    app.register_blueprint(Exercises.main, url_prefix = '/')
+    app.register_blueprint(exercises.main, url_prefix = '/')
 
 
     # Error handlers
