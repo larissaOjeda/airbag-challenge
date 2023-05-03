@@ -15,8 +15,7 @@ if __name__ == '__main__':
     app.config.from_object(config['development']) # from the dictionary
     
     #Blueprints
-    app.register_blueprint(exercises.main, url_prefix = '/')
-
+    app.register_blueprint(exercises.main, url_prefix = '/api/combinations')
 
     # Error handlers
     app.register_error_handler(404, page_not_found)

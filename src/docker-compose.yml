@@ -12,5 +12,5 @@ services:
       - 'larissa-postgres-data:/var/lib/postgresql/data'
 
 volumes:
-  larissa-postgres-data:
+  airbag-postgres-data:
     name: airbag-db
