@@ -1,10 +1,11 @@
 from database.db import get_connection
-#from .entities.ChargingDetails import ChargingDetails
+from models.entities.exercisesEntity import CaesarCipher
 from typing import Optional
 
-class Exercises: 
+class ExercisesModel: 
 
-    @classmethod
+    #@classmethod
+    @staticmethod
     def printCombinations() -> list:
         """
         Generates all possible combinations of three distinct digits in ascending order
@@ -20,10 +21,11 @@ class Exercises:
         return res 
 
     @classmethod
-    def clearDuplicates(numList: list[]) -> Optional[list[float]]:
+    def clearDuplicates(numList: list[float]) -> Optional[list[float]]:
         """
         Removes duplicate items from a list of numbers and returns the resulting list.
         numList is expected to be a list of integers or floats, and returns a list of floats or None if the input list is None.
+        This is a non destructive function (the original list can still be retreived)
 
         Args
             numList: list of integers or floats.
@@ -39,8 +41,24 @@ class Exercises:
         if len(numList) == 0: 
             return numList
         try:
-            return list((set(numList)))
+            res = list((set(numList)))
+            return res
         except Exception as ex: 
+            raise Exception(ex)
+        
+    @classmethod
+    def create_caesar_register(self, caesar_cipher):
+        try:
+            connection = get_connection()
+            with connection.cursor() as cursor:
+                cursor.execute("""INSERT INTO caesar (id, message, n) 
+                                VALUES (%s, %s, %s)""", (caesar_cipher.id, caesar_cipher.message, caesar_cipher.n))
+                affected_rows = cursor.rowcount
+                connection.commit()
+
+            connection.close()
+            return affected_rows
+        except Exception as ex:
             raise Exception(ex)
     
     @classmethod
@@ -108,7 +126,7 @@ class Exercises:
                     elif expression[j] == ")":
                         count -= 1
                     j += 1
-                number = Exercises.evalExpression(expression[i+1:j-1])
+                number = ExercisesModel.evalExpression(expression[i+1:j-1])
                 stack.append(number)
                 i = j
 

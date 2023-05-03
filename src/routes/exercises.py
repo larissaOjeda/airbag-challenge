@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 
 # Models
-from models.exercises import Exercises
+from models.exercisesModel import ExercisesModel
 
 # Utils 
 from utils.ListValidation import ListValidation
@@ -10,10 +10,10 @@ from utils.ListValidation import ListValidation
 main = Blueprint('exercises_blueprint', __name__)
 
 
-@main.route('/print-combinations', methods=['GET'])
+@main.route('/', methods=['GET'])
 def get_print_combinations():
     try:
-        combinations = Exercises.printCombinations()
+        combinations = ExercisesModel.printCombinations()
         return combinations, 200
     except Exception as ex: 
         return jsonify({'message' : str(ex)}), 500
@@ -24,7 +24,7 @@ def get_caesar_cipher():
     try:
         message = request.json['message']
         n = request.json['n']
-        caesarCipher = Exercises.caesar_cipher(message, n)
+        caesarCipher = ExercisesModel.caesar_cipher(message, n)
         return caesarCipher, 200
     except Exception as ex: 
         return jsonify({'message' : str(ex)}), 500
@@ -36,7 +36,7 @@ def get_clear_duplicates():
         numList = request.json['numList']
         if not ListValidation.is_list_valid(numList):
             return jsonify({'message' : "Invalid list"}), 401
-        cleanList = Exercises.clearDuplicates(numList)
+        cleanList = ExercisesModel.clearDuplicates(numList)
         return cleanList, 200
     except Exception as ex: 
         return jsonify({'message' : str(ex)}), 500
@@ -46,7 +46,7 @@ def get_clear_duplicates():
 def get_eval_expression():
     try:
         expression = request.json['expression']
-        evaluated = Exercises.evalExpression(expression)
+        evaluated = ExercisesModel.evalExpression(expression)
         return evaluated, 200
     except Exception as ex: 
         return jsonify({'message' : str(ex)}), 500
